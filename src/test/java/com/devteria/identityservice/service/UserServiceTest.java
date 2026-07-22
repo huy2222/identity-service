@@ -107,5 +107,16 @@ public class UserServiceTest {
                 .isEqualTo("cd5151e0-1c2b-4f3a-9d5e-123456789abc");
     }
 
+    @Test
+    @WithMockUser(username = "join12345" )
+    void getMyInfo_Invalid_error() {
+        when(userRepository.findByUsername(anyString()))
+                .thenReturn(Optional.ofNullable(null));
+        var expection = assertThrows(AppException.class, () -> userService.getMyInfo());
+        Assertions.assertThat(expection.getErrorCode().getCode())
+                .isEqualTo(1005);
+    }
+
+
 
 }
