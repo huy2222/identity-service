@@ -1,9 +1,9 @@
 package com.devteria.identityservice.exception;
 
-import lombok.Data;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+
+import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
@@ -16,8 +16,7 @@ public enum ErrorCode {
     USER_NOT_EXISTED(1005, "User not exists", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
-    INVALID_DOB(1008, "Invalid date of birth. User must be at least {min} years old.", HttpStatus.BAD_REQUEST)
-    ;
+    INVALID_DOB(1008, "Invalid date of birth. User must be at least {min} years old.", HttpStatus.BAD_REQUEST);
     private int code;
     private String message;
     private HttpStatusCode statusCode;
@@ -27,6 +26,4 @@ public enum ErrorCode {
         this.message = message;
         this.statusCode = statusCode;
     }
-
-
 }

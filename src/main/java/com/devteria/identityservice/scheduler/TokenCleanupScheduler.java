@@ -1,12 +1,14 @@
 package com.devteria.identityservice.scheduler;
 
-import com.devteria.identityservice.repository.InvalidatedTokenRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.Instant;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
+import com.devteria.identityservice.repository.InvalidatedTokenRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
@@ -24,5 +26,4 @@ public class TokenCleanupScheduler {
 
         log.info("Finished cleaning expired tokens.");
     }
-
 }
