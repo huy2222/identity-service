@@ -3,6 +3,7 @@ package com.devteria.identityservice.mapper;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.devteria.identityservice.dto.request.UserCreationRequest;
@@ -12,11 +13,13 @@ import com.devteria.identityservice.entity.User;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+    @Mapping(target = "roles", ignore = true)
     User toUser(UserCreationRequest request);
 
     UserResponse toUserResponse(User user);
 
     List<UserResponse> toUserResponse(List<User> users);
 
+    @Mapping(target = "roles", ignore = true)
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
 }

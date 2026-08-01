@@ -3,6 +3,7 @@ package com.devteria.identityservice.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.devteria.identityservice.repository.RoleRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
+    RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request) {
@@ -41,7 +43,7 @@ public class UserService {
         HashSet<String> roles = new HashSet<>();
         roles.add(Role.USER.name());
 
-        user.setRoles(roles);
+//        user.setRoles(roles);
 
         try {
            user =  userRepository.save(user);
@@ -56,6 +58,10 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         userMapper.updateUser(user, request);
 
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        var roles = roleRepository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
+        log.info("Updating user with ROLES: {}", roles);
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
@@ -71,7 +77,8 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('APPROVE_POST')")
     public List<UserResponse> getUsers() {
         return userMapper.toUserResponse(userRepository.findAll());
     }

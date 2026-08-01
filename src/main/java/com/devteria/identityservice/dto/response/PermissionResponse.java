@@ -1,9 +1,5 @@
 package com.devteria.identityservice.dto.response;
 
-import java.time.LocalDate;
-import java.util.Set;
-
-import com.devteria.identityservice.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +11,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class UserResponse {
-    String id;
-    String username;
-    String firstName;
-    String lastName;
-    LocalDate dob;
-    Set<Role> roles;
+public class PermissionResponse {
+    String name;
+    String description;
 }

@@ -1,6 +1,7 @@
 package com.devteria.identityservice.dto.request;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.devteria.identityservice.validator.DobConstraint;
 
@@ -22,4 +23,6 @@ public class UserUpdateRequest {
 
     @DobConstraint(min = 2, message = "INVALID_DOB")
     private LocalDate dob;
+
+    List<String> roles;
 }
