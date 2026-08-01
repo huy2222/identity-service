@@ -1,11 +1,9 @@
 package com.devteria.identityservice.entity;
 
 import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -17,6 +15,6 @@ import java.util.Set;
 public class Permission {
     @Id
     String name;
-    String description;
 
+    String description;
 }

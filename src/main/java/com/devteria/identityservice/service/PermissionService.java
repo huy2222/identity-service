@@ -1,16 +1,18 @@
 package com.devteria.identityservice.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.devteria.identityservice.dto.request.PermissionRequest;
 import com.devteria.identityservice.dto.response.PermissionResponse;
 import com.devteria.identityservice.entity.Permission;
 import com.devteria.identityservice.mapper.PermissionMapper;
 import com.devteria.identityservice.repository.PermissionRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ import java.util.List;
 public class PermissionService {
     PermissionRepository permissionRepository;
     PermissionMapper permissionMapper;
+
     public PermissionResponse create(PermissionRequest request) {
         Permission permission = permissionMapper.toPermission(request);
         permission = permissionRepository.save(permission);
@@ -29,8 +32,8 @@ public class PermissionService {
         var permissions = permissionRepository.findAll();
         return permissions.stream().map(permissionMapper::toPermissionResponse).toList();
     }
-    public void delete(String permissionName){
+
+    public void delete(String permissionName) {
         permissionRepository.deleteById(permissionName);
     }
-
 }
