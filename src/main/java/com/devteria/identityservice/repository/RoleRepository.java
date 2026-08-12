@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.devteria.identityservice.entity.Role;
 
+import java.util.Optional;
+
 @Repository
 public interface RoleRepository extends JpaRepository<Role, String> {
-    Role findByName(String name);
+    Optional<Role> findByName(String name);
 }
