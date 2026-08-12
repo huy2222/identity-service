@@ -3,6 +3,7 @@ package com.devteria.identityservice.service;
 import java.util.HashSet;
 import java.util.List;
 
+import com.devteria.identityservice.entity.Role;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,7 +15,6 @@ import com.devteria.identityservice.dto.request.UserCreationRequest;
 import com.devteria.identityservice.dto.request.UserUpdateRequest;
 import com.devteria.identityservice.dto.response.UserResponse;
 import com.devteria.identityservice.entity.User;
-import com.devteria.identityservice.enums.Role;
 import com.devteria.identityservice.exception.AppException;
 import com.devteria.identityservice.exception.ErrorCode;
 import com.devteria.identityservice.mapper.UserMapper;
@@ -40,10 +40,12 @@ public class UserService {
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        HashSet<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
-
-        //        user.setRoles(roles);
+//        HashSet<String> roles = new HashSet<>();
+//        roles.add(Role.USER.name());
+//
+//                user.setRoles(roles);
+        Role role = roleRepository.findByName("USER");
+        user.setRoles(new HashSet<>(List.of(role)));
 
         try {
             user = userRepository.save(user);
