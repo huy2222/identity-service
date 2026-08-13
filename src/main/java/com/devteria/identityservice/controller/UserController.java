@@ -2,6 +2,8 @@ package com.devteria.identityservice.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,9 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
+@Tag(name = "User Controller", description = "Controller for managing users")
 public class UserController {
     UserService userService;
 
+    @Operation(summary = "Create a new user", description = "Creates a new user with the provided details")
     @PostMapping
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request) {
         log.info("User controller create");
@@ -33,6 +37,7 @@ public class UserController {
                 .build();
     }
 
+    @Operation(summary = "Get all users", description = "Retrieves a list of all users")
     @GetMapping
     ApiResponse<List<UserResponse>> getUsers() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -43,11 +48,13 @@ public class UserController {
                 .build();
     }
 
+    @Operation(summary = "Get user by ID", description = "Retrieves a user by their unique ID")
     @GetMapping("/{userId}")
     UserResponse getUser(@PathVariable("userId") String userId) {
         return userService.getUser(userId);
     }
 
+    @Operation(summary = "Get my info", description = "Retrieves the information of the currently authenticated user")
     @GetMapping("/myInfo")
     ApiResponse<UserResponse> getMyInfo() {
         return ApiResponse.<UserResponse>builder()
@@ -55,11 +62,13 @@ public class UserController {
                 .build();
     }
 
+    @Operation(summary = "Update user", description = "Updates the details of an existing user")
     @PutMapping("/{userId}")
     UserResponse updateUser(@PathVariable String userId, @RequestBody UserUpdateRequest request) {
         return userService.updateUser(userId, request);
     }
 
+    @Operation(summary = "Delete user", description = "Deletes a user by their unique ID")
     @DeleteMapping("/{userId}")
     String deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);

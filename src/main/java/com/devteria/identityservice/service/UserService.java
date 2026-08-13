@@ -75,8 +75,8 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    //    @PreAuthorize("hasRole('ADMIN')")
-    @PreAuthorize("hasAuthority('APPROVE_POST')")
+        @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasAuthority('APPROVE_POST')")
     public List<UserResponse> getUsers() {
         return userMapper.toUserResponse(userRepository.findAll());
     }

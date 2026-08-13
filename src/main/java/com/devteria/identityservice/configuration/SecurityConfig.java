@@ -33,8 +33,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request -> request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS)
                 .permitAll()
-                //                        .requestMatchers(HttpMethod.GET, "/users")
-                //                        .hasRole(Role.ADMIN.name())
+                .requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                ).permitAll()
                 .anyRequest()
                 .authenticated());
 
